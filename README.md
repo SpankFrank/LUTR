@@ -173,7 +173,7 @@ Transcript matching, removal of unsupported transcripts and UTR-variant generati
 
 An idealized "prediction" of coding sequences was created from the mouse GRCm39 reference annotation.
 1. [noUTR.py](https://github.com/SimonHegele/LUTR/blob/main/src/scripts/noUTR.py) was used to remove UTRs from the annotation.
-2. agat_sp_convert_sp_gxf2gxf.pl from [AGAT](https://github.com/NBISweden/AGAT) was used to remove duplicated transcript isoforms.
+2. agat_convert_sp_gxf2gxf.pl from [AGAT](https://github.com/NBISweden/AGAT) was used to remove duplicated transcript isoforms.
 
 ### 5.1.2. Assemblies
 
