@@ -60,4 +60,4 @@ def gene_pair_slices_multiprocessed(prediction: dict[str, DataFrame],
     
     with Pool(min(threads, len(prediction.keys()))) as pool:
         
-        pool.map(generate_gene_pair_slices_wrapper, tasks)
+        pool.imap_unordered(generate_gene_pair_slices_wrapper, tasks)
