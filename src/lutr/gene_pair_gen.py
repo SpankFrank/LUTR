@@ -47,7 +47,7 @@ def gene_pairs_multiprocessing(predicted_gff: dict[str, DataFrame],
 
         total_gene_pairs: list[tuple[Series, DataFrame]] = []
         
-        for gene_pair in list(chain(pool.map(gene_pairs_wrapper, args))):
+        for gene_pair in list(chain(pool.imap_unordered(gene_pairs_wrapper, args))):
 
             total_gene_pairs += gene_pair
             
