@@ -121,7 +121,7 @@ Contents of the output directory:
 The "temporary" directory stores the annotations for each gene, however it is not deleted automatically.
 This allows skipping step 1 when re-running LUTR with different parameters.
 
-Running agat_sp_convert_sp_gxf2gxf.pl from [AGAT] (https://github.com/NBISweden/AGAT)
+Running agat_sp_convert_sp_gxf2gxf.pl from [AGAT](https://github.com/NBISweden/AGAT)
 on lutr.gff is recommended for the removal of duplicated isoforms
 
 # 3 Additional scripts
