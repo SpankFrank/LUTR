@@ -151,7 +151,7 @@ LUTR creates GFF-slices for all predicted genes and their overlapping assembled 
 1. GFF-File loading as pandas.DataFrame
 2. GFF-File chromosome slice generation
 3. Identification of pairs of overlapping predicted and assembled genes
-4. GFF-File gene slice generation for gene pairs*
+4. GFF-File gene slice generation for gene pairs
 
 ### Step 2: Gene pair slice processing
 Transcript matching, removal of unsupported transcripts and UTR-variant generation
@@ -164,6 +164,8 @@ Transcript matching, removal of unsupported transcripts and UTR-variant generati
 <p align="center">
   <img src="figures/workflow.png" width="500"/>
 </p>
+
+Figure 1: LUTR workflow
 
 # 5 Testing LUTR
 
@@ -178,7 +180,7 @@ An idealized "prediction" of coding sequences was created from the mouse GRCm39 
 ### 5.1.2. Assemblies
 
 Assembly 1:
-perfect “assembly” / goal annotation (full reference gene records)
+perfect “assembly” / goal annotation (full reference records for protein coding transcripts)
 
 Assembly 2:
 ~600 million Illumina read pairs (SRA-ID: PRJNA375882), mapped with [STAR](https://github.com/alexdobin/STAR)
@@ -230,20 +232,52 @@ Annotation statistics reported by [Sqanti3](https://github.com/ConesaLab/SQANTI3
 </p>
 
 <p align="center">
-  <sub>Figure 1: Sqanti3 results for test 1 (idealized assembly)</sub>
+  <sub>a) test 1 (idealized assembly)</sub>
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <sub>Figure 2: Figure 2: Sqanti3 results for test 2 (real assembly)</sub>
+  <sub>b) test 2 (real assembly)</sub>
 </p>
 
+Figure 2: Sqanti3 results<br>
 FSM = Full splice match<br>
 ISM = Incomplete splice match<br>
 NIC = Novel isoform using combinations of known splice-sites<br>
 NNC = Novel isoform using unknown splice-sites
 
-### 5.3.3 Interpretation
+### 5.3.3
 
-The reconstruction of the reference annotation from the idealized data is very close to the original.<br>
-At the same time LUTR inherits the problems of the methods used to create the input annotations.
+<p align="center">
+  <img src="figures/example_BTN2a2.png" width="90%">
+</p>
+
+Figure 3: Screenshot from the IGV-Browser showing the reconstruction of the mRNAs of the BTN2a2 gene.<br>
+Red:	Idealized assembly (full reference records) with eight transcripts, including
+seven mRNAs, six of them having UTRs.<br>
+Blue:	Idealized prediction (UTR-clipped reference mRNAs) of five different 
+non-continuous CDS.<br>
+Pink:	Successful reconstruction of all six reference mRNAs with UTR by LUTR
+
+<p align="center">
+  <img src="figures/example_A4GALT.png" width="90%">
+</p>
+
+Figure 4: Screenshot from IGV-Browser showing the reconstruction of the mRNAs of the A4GALT gene.
+Red:	Idealized assembly (full reference records) with five mRNAs, all of them having UTRs
+Blue:	Idealized prediction (UTR-clipped reference mRNAs) of two continuous CDS with
+shared stop codon but alternative transcription start sites. 
+Pink:	Partially successful reconstruction of reference mRNAs with UTR by LUTR.
+
+### 5.3.4 Discussion
+
+The reconstruction of the reference annotation from the idealized data is very close to the original, demonstrated also by the results for the BTN2a2 gene shown in figure 3. However, a slight increase in the number of transcripts can be observed. The reason for this is illustrated in Figure 4, using the A4GALT gene as an example. Alternative translation start sites can lead to a complete overlap of pairs of coding sequences. In such a case, it is impossible to unambiguously assign assembled transcripts that contain both coding sequences.
+
+Using a real assembly rather than an idealized one, we still obtain decent results.
+More than one in two transcripts represents a correct and complete match with a reference transcript.
+More than one in four transcripts represents at least correct albeit incomplete match with a reference transcript.
+One in five transcripts, however, does not agree with any reference transcript.
+They for example combine known splice-sites in new ways (NIC) or use different splice-sites (NNC).
+Although some of them may be genuine and missing from the reference annotation, many if not most of them result from assembly errors.
+
+LUTR processes its input exactly as intended but inherits the limitations of the preceeding annotation steps.
 
 # 6. Comparison to predecessor UTRpy
 
